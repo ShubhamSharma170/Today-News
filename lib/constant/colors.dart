@@ -17,4 +17,5 @@ class AllColors {
   static Color teal1A9E8E = const Color(0xFF1A9E8E);
 
   static Color teal50 = Colors.teal.shade50;
+  static List<Color> splashColor = [Color(0xFFFF8C42), Color(0xFFFFF3B0)];
 }
