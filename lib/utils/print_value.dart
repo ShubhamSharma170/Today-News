@@ -14,7 +14,7 @@ void printValue(dynamic value, {String tag = ""}) {
       log("JSON OUTPUT: $tag ${JsonEncoder.withIndent("  ").convert(value)}\n");
     } else {
       if (kDebugMode) {
-        print("PRINT OUTPUT: $tag $value\n\n");
+        log("PRINT OUTPUT: $tag $value\n\n");
       }
     }
   }
