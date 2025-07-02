@@ -1,3 +1,5 @@
+import 'package:today_news/screen/auth/login/login_screen.dart';
+import 'package:today_news/screen/auth/signup/signup_screen.dart';
 import 'package:today_news/screen/home/home_screen.dart';
 
 import 'routes_name.dart';
@@ -9,6 +11,14 @@ class Routes {
       case RoutesName.home:
         return MaterialPageRoute(
           builder: (BuildContext context) => HomeScreen(),
+        );
+      case RoutesName.signup:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => SignUpScreen(),
+        );
+        case RoutesName.login:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => LoginScreen(),
         );
       default:
         return MaterialPageRoute(
