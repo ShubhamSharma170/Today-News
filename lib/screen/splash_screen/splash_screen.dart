@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:today_news/constant/colors.dart';
+import 'package:today_news/helper/storage_helper/storage_helper.dart';
 import 'package:today_news/routes/routes_name.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,7 +17,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 3), () {
+      if(StorageHelper().getString() == ""){
+        
       Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (_) => false);
+      }else{
+      Navigator.pushNamedAndRemoveUntil(context, RoutesName.home, (_) => false);
+
+      }
     });
     super.initState();
   }

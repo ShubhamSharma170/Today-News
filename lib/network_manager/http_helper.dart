@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:today_news/helper/storage_helper/storage_helper.dart';
+import 'package:today_news/main.dart';
+import 'package:today_news/routes/routes_name.dart';
 import 'package:today_news/utils/print_value.dart';
 import 'package:today_news/utils/toast_message.dart';
 
@@ -141,11 +144,11 @@ class HttpHelper {
         }
         throw Exception("Error with Status code 400");
       case 401:
-        // StorageHelper().clear();
-        // navigatorKey.currentState!.pushNamedAndRemoveUntil(
-        //   RoutesName.login,
-        //   (route) => false,
-        // );
+        StorageHelper().clean();
+        navigatorKey.currentState!.pushNamedAndRemoveUntil(
+          RoutesName.login,
+          (route) => false,
+        );
         throw Exception("Unauthorized");
       case 500:
         throw Exception("Error with Status code 500");

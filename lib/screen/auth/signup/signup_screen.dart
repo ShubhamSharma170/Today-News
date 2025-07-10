@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:today_news/constant/colors.dart';
+import 'package:today_news/provider/auth_provider/auth_provider.dart';
+import 'package:today_news/utils/loadingIndicator.dart';
+import 'package:today_news/utils/toast_message.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
@@ -60,25 +64,57 @@ class SignUpScreen extends StatelessWidget {
               obscureText: true,
             ),
             SizedBox(height: height * 0.05),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AllColors.orangeFF8C42,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () {
-                  // sign up logic
-                },
-                child: Text(
-                  "Sign Up",
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    color: AllColors.white,
-                    fontWeight: FontWeight.w600,
+            ChangeNotifierProvider(
+              create: (context) => AuthProvider(),
+              child: Consumer<AuthProvider>(
+                builder: (ctx, provider, child) => SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AllColors.orangeFF8C42,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onPressed: () {
+                      // sign up logic
+                      if (emailController.text.isEmpty) {
+                        toastMessage("Please enter email");
+                        return;
+                      } else if (passwordController.text.isEmpty) {
+                        toastMessage("Please enter password");
+                        return;
+                      } else if (confirmPasswordController.text.isEmpty) {
+                        toastMessage("Please enter confirm password");
+                        return;
+                      } else if (passwordController.text !=
+                          confirmPasswordController.text) {
+                        toastMessage(
+                          "Password and confirm password does not match",
+                        );
+                        return;
+                      } else {
+                        toastMessage("Creating account...");
+                        provider.createUser(
+                          emailController.text.trim(),
+                          passwordController.text.trim(),
+                        );
+                        emailController.clear();
+                        passwordController.clear();
+                        confirmPasswordController.clear();
+                      }
+                    },
+                    child: provider.isLoading
+                        ? loadingIndicator()
+                        : Text(
+                            "Sign Up",
+                            style: GoogleFonts.poppins(
+                              fontSize: 16,
+                              color: AllColors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                   ),
                 ),
               ),
