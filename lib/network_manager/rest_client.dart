@@ -1,4 +1,5 @@
 import 'package:today_news/constant/api.dart';
+import 'package:today_news/model/category_news_model.dart';
 import 'package:today_news/model/news_channel_model.dart';
 import 'package:today_news/network_manager/http_helper.dart';
 
@@ -20,5 +21,12 @@ class RestClient {
       url: "$topHeadlineApiURL=$source&apiKey=$apiKey",
     );
     return NewsChannelModel.fromJson(response);
+  }
+
+  static Future<CategoryNewsModel> getCategoryNews(String category) async {
+    Map<String, dynamic> response = await httpHelper.getAPI(
+      url: "$categoryNewsAPI+$category&pageSize=15&apiKey=$apiKey",
+    );
+    return CategoryNewsModel.fromJson(response);
   }
 }

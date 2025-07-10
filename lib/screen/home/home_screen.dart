@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // log("Checking user id.........${StorageHelper().getString()}");
 
     return Scaffold(
-      backgroundColor: AllColors.floraWhite,
+      backgroundColor: AllColors.background,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: Container(
@@ -57,6 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           child: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.menu, color: AllColors.black),
+              onPressed: () =>
+                  Navigator.pushNamed(context, RoutesName.category),
+            ),
             backgroundColor: Colors.transparent,
             title: const Text('Home'),
             titleTextStyle: TextStyle(

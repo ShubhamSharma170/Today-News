@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AllColors {
+  static Color background = Color(0xFFFFF8E7);
   static Color black = Colors.black;
 
   static Color grey = Colors.grey;

@@ -1,5 +1,6 @@
 import 'package:today_news/screen/auth/login/login_screen.dart';
 import 'package:today_news/screen/auth/signup/signup_screen.dart';
+import 'package:today_news/screen/category/category_screen.dart';
 import 'package:today_news/screen/home/home_screen.dart';
 
 import 'routes_name.dart';
@@ -16,15 +17,18 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => SignUpScreen(),
         );
-        case RoutesName.login:
+      case RoutesName.login:
         return MaterialPageRoute(
           builder: (BuildContext context) => LoginScreen(),
         );
+      case RoutesName.category:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => CategoryScreen(),
+        );
       default:
         return MaterialPageRoute(
-          builder:
-              (_) =>
-                  const Scaffold(body: Center(child: Text("No Route Found"))),
+          builder: (_) =>
+              const Scaffold(body: Center(child: Text("No Route Found"))),
         );
     }
   }
