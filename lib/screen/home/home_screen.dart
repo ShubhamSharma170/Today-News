@@ -154,126 +154,163 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 12.0,
                               ),
-                              child: Container(
-                                width: width * 0.85,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black45,
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Stack(
-                                  children: [
-                                    // 🖼️ Background Image
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(16),
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            provider
-                                                .model
-                                                .articles?[index]
-                                                .urlToImage ??
-                                            "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
-                                        fit: BoxFit.cover,
-                                        width: double.infinity,
-                                        height: height * 0.55,
-                                        placeholder: (ctx, url) =>
-                                            loadingIndicator(),
-                                        errorWidget: (ctx, url, error) => Icon(
-                                          Icons.error,
-                                          color: AllColors.red,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    RoutesName.detail,
+                                    arguments: {
+                                      "author": provider
+                                          .model
+                                          .articles?[index]
+                                          .author,
+                                      "title":
+                                          provider.model.articles?[index].title,
+                                      "description": provider
+                                          .model
+                                          .articles?[index]
+                                          .description,
+                                      "url":
+                                          provider.model.articles?[index].url,
+                                      "urlToImage": provider
+                                          .model
+                                          .articles?[index]
+                                          .urlToImage,
+                                      "publishedAt": provider
+                                          .model
+                                          .articles?[index]
+                                          .publishedAt,
+                                      "content": provider
+                                          .model
+                                          .articles?[index]
+                                          .content,
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  width: width * 0.85,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black45,
+                                        blurRadius: 8,
+                                        offset: const Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      // 🖼️ Background Image
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(16),
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              provider
+                                                  .model
+                                                  .articles?[index]
+                                                  .urlToImage ??
+                                              "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
+                                          fit: BoxFit.cover,
+                                          width: double.infinity,
+                                          height: height * 0.55,
+                                          placeholder: (ctx, url) =>
+                                              loadingIndicator(),
+                                          errorWidget: (ctx, url, error) =>
+                                              Icon(
+                                                Icons.error,
+                                                color: AllColors.red,
+                                              ),
                                         ),
                                       ),
-                                    ),
 
-                                    // 🌫️ Overlay Gradient
-                                    Positioned.fill(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            16,
+                                      // 🌫️ Overlay Gradient
+                                      Positioned.fill(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              16,
+                                            ),
+                                            gradient: LinearGradient(
+                                              begin: Alignment.bottomCenter,
+                                              end: Alignment.topCenter,
+                                              colors: [
+                                                Colors.black54,
+                                                Colors.transparent,
+                                              ],
+                                            ),
                                           ),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.bottomCenter,
-                                            end: Alignment.topCenter,
-                                            colors: [
-                                              Colors.black54,
-                                              Colors.transparent,
+                                        ),
+                                      ),
+
+                                      // 📄 Text Info Card
+                                      Positioned(
+                                        bottom: 20,
+                                        left: 12,
+                                        right: 12,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(12),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                provider
+                                                        .model
+                                                        .articles?[index]
+                                                        .title ??
+                                                    "No Title",
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Colors.black87,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    provider
+                                                            .model
+                                                            .articles?[index]
+                                                            .source
+                                                            ?.name ??
+                                                        "Source",
+                                                    style: GoogleFonts.poppins(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.grey[800],
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    date,
+                                                    style: GoogleFonts.poppins(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.grey[800],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ],
                                           ),
                                         ),
                                       ),
-                                    ),
-
-                                    // 📄 Text Info Card
-                                    Positioned(
-                                      bottom: 20,
-                                      left: 12,
-                                      right: 12,
-                                      child: Container(
-                                        padding: const EdgeInsets.all(12),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              provider
-                                                      .model
-                                                      .articles?[index]
-                                                      .title ??
-                                                  "No Title",
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.black87,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 8),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  provider
-                                                          .model
-                                                          .articles?[index]
-                                                          .source
-                                                          ?.name ??
-                                                      "Source",
-                                                  style: GoogleFonts.poppins(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Colors.grey[800],
-                                                  ),
-                                                ),
-                                                Text(
-                                                  date,
-                                                  style: GoogleFonts.poppins(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Colors.grey[800],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
@@ -361,85 +398,119 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 clipBehavior: Clip
                                     .antiAlias, // important for rounded corners
-                                child: Stack(
-                                  children: [
-                                    // 🖼️ Background Image
-                                    CachedNetworkImage(
-                                      imageUrl:
-                                          provider
-                                              .model
-                                              .articles?[index]
-                                              .urlToImage ??
-                                          "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
-                                      height: 200,
-                                      placeholder: (ctx, url) =>
-                                          loadingIndicator(),
-                                      errorWidget: (ctx, url, error) => Icon(
-                                        Icons.error,
-                                        color: AllColors.red,
+                                child: InkWell(
+                                  onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    RoutesName.detail,
+                                    arguments: {
+                                      "author": provider
+                                          .model
+                                          .articles?[index]
+                                          .author,
+                                      "title":
+                                          provider.model.articles?[index].title,
+                                      "description": provider
+                                          .model
+                                          .articles?[index]
+                                          .description,
+                                      "url":
+                                          provider.model.articles?[index].url,
+                                      "urlToImage": provider
+                                          .model
+                                          .articles?[index]
+                                          .urlToImage,
+                                      "publishedAt": provider
+                                          .model
+                                          .articles?[index]
+                                          .publishedAt,
+                                      "content": provider
+                                          .model
+                                          .articles?[index]
+                                          .content,
+                                    },
+                                  );
+                                },
+                                  child: Stack(
+                                    children: [
+                                      // 🖼️ Background Image
+                                      CachedNetworkImage(
+                                        imageUrl:
+                                            provider
+                                                .model
+                                                .articles?[index]
+                                                .urlToImage ??
+                                            "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                        height: 200,
+                                        placeholder: (ctx, url) =>
+                                            loadingIndicator(),
+                                        errorWidget: (ctx, url, error) => Icon(
+                                          Icons.error,
+                                          color: AllColors.red,
+                                        ),
                                       ),
-                                    ),
-
-                                    // 🌫️ Gradient overlay for text readability
-                                    Container(
-                                      width: double.infinity,
-                                      height: 200,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.bottomCenter,
-                                          end: Alignment.topCenter,
-                                          colors: [
-                                            Colors.black87,
-                                            Colors.transparent,
+                                  
+                                      // 🌫️ Gradient overlay for text readability
+                                      Container(
+                                        width: double.infinity,
+                                        height: 200,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.bottomCenter,
+                                            end: Alignment.topCenter,
+                                            colors: [
+                                              Colors.black87,
+                                              Colors.transparent,
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                  
+                                      // 📝 Text on top of image
+                                      Positioned(
+                                        bottom: 16,
+                                        left: 16,
+                                        right: 16,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              provider
+                                                      .model
+                                                      .articles?[index]
+                                                      .title ??
+                                                  "Not Available",
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              provider
+                                                      .model
+                                                      .articles?[index]
+                                                      .description ??
+                                                  "Not Available",
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.white70,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
-                                    ),
-
-                                    // 📝 Text on top of image
-                                    Positioned(
-                                      bottom: 16,
-                                      left: 16,
-                                      right: 16,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            provider
-                                                    .model
-                                                    .articles?[index]
-                                                    .title ??
-                                                "Not Available",
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                            provider
-                                                    .model
-                                                    .articles?[index]
-                                                    .description ??
-                                                "Not Available",
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.white70,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

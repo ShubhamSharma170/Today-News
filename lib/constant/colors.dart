@@ -4,8 +4,13 @@ class AllColors {
   static Color transparent = Colors.transparent;
   static Color background = Color(0xFFFFF8E7);
   static Color black = Colors.black;
+  static Color black38 = Colors.black38;
+  static Color black12 = Colors.black12;
+  static Color black87 = Colors.black87;
 
   static Color grey = Colors.grey;
+  static Color grey400 = Colors.grey.shade400;
+  static Color grey800 = Colors.grey.shade800;
 
   static Color white = Colors.white;
   static Color white70 = Colors.white70;

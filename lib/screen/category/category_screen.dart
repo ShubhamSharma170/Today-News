@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:today_news/constant/colors.dart';
 import 'package:today_news/provider/category_news_provider.dart';
+import 'package:today_news/routes/routes_name.dart';
 import 'package:today_news/utils/loadingIndicator.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -41,7 +42,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     ];
     return Scaffold(
       backgroundColor: AllColors.background,
-      appBar: PreferredSize(
+      appBar: PreferredSize( 
         preferredSize: const Size.fromHeight(60),
         child: Container(
           decoration: BoxDecoration(
@@ -116,131 +117,129 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       : ListView.builder(
                           itemCount: provider.model.articles?.length ?? 0,
                           itemBuilder: (context, index) {
-                            return Card(
-                              margin: EdgeInsets.symmetric(
-                                vertical: 8,
-                                horizontal: 12,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              clipBehavior: Clip
-                                  .antiAlias, // important for rounded corners
-                              child: Stack(
-                                children: [
-                                  // 🖼️ Background Image
-                                  CachedNetworkImage(
-                                    imageUrl:
-                                        provider
-                                            .model
-                                            .articles?[index]
-                                            .urlToImage ??
-                                        "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: 200,
-                                    placeholder: (ctx, url) =>
-                                        loadingIndicator(),
-                                    errorWidget: (ctx, url, error) =>
-                                        Icon(Icons.error, color: AllColors.red),
-                                  ),
-
-                                  // 🌫️ Gradient overlay for text readability
-                                  Container(
-                                    width: double.infinity,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.bottomCenter,
-                                        end: Alignment.topCenter,
-                                        colors: [
-                                          Colors.black87,
-                                          Colors.transparent,
+                            return InkWell(
+                              onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    RoutesName.detail,
+                                    arguments: {
+                                      "author": provider
+                                          .model
+                                          .articles?[index]
+                                          .author,
+                                      "title":
+                                          provider.model.articles?[index].title,
+                                      "description": provider
+                                          .model
+                                          .articles?[index]
+                                          .description,
+                                      "url":
+                                          provider.model.articles?[index].url,
+                                      "urlToImage": provider
+                                          .model
+                                          .articles?[index]
+                                          .urlToImage,
+                                      "publishedAt": provider
+                                          .model
+                                          .articles?[index]
+                                          .publishedAt,
+                                      "content": provider
+                                          .model
+                                          .articles?[index]
+                                          .content,
+                                    },
+                                  );
+                                },
+                              child: Card(
+                                margin: EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 12,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                clipBehavior: Clip
+                                    .antiAlias, // important for rounded corners
+                                child: Stack(
+                                  children: [
+                                    // 🖼️ Background Image
+                                    CachedNetworkImage(
+                                      imageUrl:
+                                          provider
+                                              .model
+                                              .articles?[index]
+                                              .urlToImage ??
+                                          "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: 200,
+                                      placeholder: (ctx, url) =>
+                                          loadingIndicator(),
+                                      errorWidget: (ctx, url, error) =>
+                                          Icon(Icons.error, color: AllColors.red),
+                                    ),
+                              
+                                    // 🌫️ Gradient overlay for text readability
+                                    Container(
+                                      width: double.infinity,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.bottomCenter,
+                                          end: Alignment.topCenter,
+                                          colors: [
+                                            Colors.black87,
+                                            Colors.transparent,
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                              
+                                    // 📝 Text on top of image
+                                    Positioned(
+                                      bottom: 16,
+                                      left: 16,
+                                      right: 16,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            provider
+                                                    .model
+                                                    .articles?[index]
+                                                    .title ??
+                                                "Not Available",
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            provider
+                                                    .model
+                                                    .articles?[index]
+                                                    .description ??
+                                                "Not Available",
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.white70,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
-                                  ),
-
-                                  // 📝 Text on top of image
-                                  Positioned(
-                                    bottom: 16,
-                                    left: 16,
-                                    right: 16,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          provider
-                                                  .model
-                                                  .articles?[index]
-                                                  .title ??
-                                              "Not Available",
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 4),
-                                        Text(
-                                          provider
-                                                  .model
-                                                  .articles?[index]
-                                                  .description ??
-                                              "Not Available",
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.white70,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             );
-                            // return Card(
-                            //   child: ListTile(
-                            //     title: Text(
-                            //       provider.model.articles?[index].title ?? "",
-                            //       style: GoogleFonts.poppins(
-                            //         fontSize: 16,
-                            //         fontWeight: FontWeight.w600,
-                            //         color: Colors.black87,
-                            //       ),
-                            //     ),
-                            //     subtitle: Text(
-                            //       provider.model.articles?[index].description ?? "",
-                            //       maxLines: 2,
-                            //       overflow: TextOverflow.ellipsis,
-                            //       style: GoogleFonts.poppins(
-                            //         fontSize: 16,
-                            //         fontWeight: FontWeight.w400,
-                            //         color: Colors.black87,
-                            //       ),
-                            //     ),
-                            //     leading: ClipRRect(
-                            //       borderRadius: BorderRadius.circular(16),
-                            //       child: CachedNetworkImage(
-                            //         imageUrl:
-                            //             provider.model.articles?[index].urlToImage ??
-                            //             "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
-                            //         fit: BoxFit.cover,
-                            //         // width: 150,
-                            //         // height: 200,
-                            //         placeholder: (ctx, url) => loadingIndicator(),
-                            //         errorWidget: (ctx, url, error) =>
-                            //             Icon(Icons.error, color: AllColors.red),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // );
                           },
                         ),
                 );

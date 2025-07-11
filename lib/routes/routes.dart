@@ -1,6 +1,7 @@
 import 'package:today_news/screen/auth/login/login_screen.dart';
 import 'package:today_news/screen/auth/signup/signup_screen.dart';
 import 'package:today_news/screen/category/category_screen.dart';
+import 'package:today_news/screen/detail/detail_screen.dart';
 import 'package:today_news/screen/home/home_screen.dart';
 
 import 'routes_name.dart';
@@ -16,6 +17,20 @@ class Routes {
       case RoutesName.signup:
         return MaterialPageRoute(
           builder: (BuildContext context) => SignUpScreen(),
+        );
+
+      case RoutesName.detail:
+        var args = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (BuildContext context) => DetailScreen(
+            author: args['author'],
+            title: args['title'],
+            description: args['description'],
+            url: args['url'],
+            urlToImage: args['urlToImage'],
+            publishedAt: args['publishedAt'],
+            content: args['content'],
+          ),
         );
       case RoutesName.login:
         return MaterialPageRoute(
