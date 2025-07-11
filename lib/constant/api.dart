@@ -6,3 +6,6 @@ final String topHeadlineApiURL = "https://newsapi.org/v2/top-headlines?sources";
 
 final String categoryNewsAPI =
     "https://newsapi.org/v2/everything?q=";
+
+final String topicNewsAPI =
+    "https://newsapi.org/v2/everything?q=";

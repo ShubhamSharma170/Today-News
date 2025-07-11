@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AllColors {
+  static Color transparent = Colors.transparent;
   static Color background = Color(0xFFFFF8E7);
   static Color black = Colors.black;
 
@@ -20,6 +21,7 @@ class AllColors {
   static Color teal1A9E8E = const Color(0xFF1A9E8E);
 
   static Color orangeFF8C42 = Color(0xFFFF8C42);
+  static Color orange0xFFFFF3B0 = Color(0xFFFFF3B0);
 
   static Color teal50 = Colors.teal.shade50;
   static List<Color> splashColor = [Color(0xFFFF8C42), Color(0xFFFFF3B0)];

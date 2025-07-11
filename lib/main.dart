@@ -5,6 +5,7 @@ import 'package:today_news/helper/storage_helper/storage_helper.dart';
 import 'package:today_news/provider/auth_provider/auth_provider.dart';
 import 'package:today_news/provider/category_news_provider.dart';
 import 'package:today_news/provider/top-headline_provider.dart';
+import 'package:today_news/provider/topic_news_provider.dart';
 import 'package:today_news/routes/routes.dart';
 import 'package:today_news/screen/splash_screen/splash_screen.dart';
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => TopheadlineProvider()),
         ChangeNotifierProvider(create: (_) => CategoryNewsProvider()),
+        ChangeNotifierProvider(create: (_) => TopicNewsProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

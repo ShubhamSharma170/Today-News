@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -73,6 +75,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
+                    print(categoryList[index]);
                     setState(() {
                       categoryName = categoryList[index];
                       Provider.of<CategoryNewsProvider>(
@@ -85,7 +88,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     margin: const EdgeInsets.all(10),
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: AllColors.floraWhite,
+                      color: categoryName == categoryList[index]
+                          ? AllColors.orangeFF8C42
+                          : Colors.transparent,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: AllColors.black),
                     ),
